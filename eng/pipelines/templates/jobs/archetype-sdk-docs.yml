@@ -33,7 +33,7 @@ jobs:
             targetFolder: $(Build.ArtifactStagingDirectory)/docs/${{ artifact.Name }}
           displayName: Copy documentation - ${{ artifact.Name }}
 
-        - task: PublishPipelineArtifact@1
-          inputs:
-            artifactName: docs
-            path: $(Build.ArtifactStagingDirectory)/docs/${{ artifact.Name }}
+      - task: PublishPipelineArtifact@1
+        inputs:
+          artifactName: docs
+          path: $(Build.ArtifactStagingDirectory)/docs
