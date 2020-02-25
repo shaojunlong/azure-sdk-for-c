@@ -107,6 +107,8 @@ jobs:
     workingDirectory: build
     displayName: ctest
 
+
+# TODO: Consolidate these two to releaseable artifacts
 - template: ./release-info.yml
   parameters:
     Artifacts: ${{ parameters.Artifacts }}
