@@ -25,7 +25,7 @@ jobs:
 
         - pwsh: |
             $outputPath = Join-Path -Path $(Build.ArtifactStagingDirectory) packages/${{ artifact.Name }}
-            $changelogPath = sdk/${{ parameters.ServiceDirectory }}/${{ artifact.Path }}/CHANGELOG.md
+            $changelogPath = "sdk/${{ parameters.ServiceDirectory }}/${{ artifact.Path }}/CHANGELOG.md"
 
             if (Test-Path $changeLogPath) {
               Copy-Item sdk/${{ parameters.ServiceDirectory }}/${{ artifact.Path }}/CHANGELOG.md $outputPath
