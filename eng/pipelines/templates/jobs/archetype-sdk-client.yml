@@ -12,6 +12,7 @@ jobs:
         vm.image: 'ubuntu-18.04'
         vcpkg.deps: ''
         VCPKG_DEFAULT_TRIPLET: 'x64-linux'
+        build.args: '-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON'
       Win_x86:
         vm.image: 'windows-2019'
         vcpkg.deps: ''
