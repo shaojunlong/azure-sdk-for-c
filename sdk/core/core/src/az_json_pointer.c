@@ -120,7 +120,8 @@ static AZ_NODISCARD az_result _az_span_reader_read_json_pointer_token(az_span* s
   }
 }
 
-static AZ_NODISCARD az_result _az_span_reader_read_json_pointer_token_char(az_span* self, uint32_t* out)
+static AZ_NODISCARD az_result
+_az_span_reader_read_json_pointer_token_char(az_span* self, uint32_t* out)
 {
   AZ_PRECONDITION_NOT_NULL(self);
   AZ_PRECONDITION_NOT_NULL(out);
