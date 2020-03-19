@@ -104,10 +104,10 @@ jobs:
       #   CMAKE_GENERATOR_PLATFORM: x64
       #   build.args: ' -DUNIT_TESTING=ON'
       MacOS_x64_with_unit_test:
-      vm.image: 'macOS-10.14'
-      vcpkg.deps: 'cmocka'
-      VCPKG_DEFAULT_TRIPLET: 'x64-osx'
-      build.args: ' -DUNIT_TESTING=ON'
+        vm.image: 'macOS-10.14'
+        vcpkg.deps: 'cmocka'
+        VCPKG_DEFAULT_TRIPLET: 'x64-osx'
+        build.args: ' -DUNIT_TESTING=ON'
   pool:
     vmImage: $(vm.image)
   variables:
