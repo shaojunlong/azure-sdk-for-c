@@ -32,8 +32,8 @@ jobs:
         sudo xcode-select --print-path
 
         # Install gcc 9
-        brew install gcc@9
-        brew switch gcc 9.2.0_3
+        brew reinstall gcc@9
+        # brew switch gcc 9.2.0_3
         gcc --version
 
         git clone https://github.com/Microsoft/vcpkg.git
