@@ -32,7 +32,7 @@ jobs:
         sudo xcode-select --print-path
 
         # Install gcc 8
-        # brew install gcc@8
+        brew install gcc@8
         gcc --version
 
         git clone https://github.com/Microsoft/vcpkg.git
