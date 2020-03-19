@@ -40,7 +40,7 @@ jobs:
         git rev-parse --verify HEAD
         git status
 
-        ./bootstrap-vcpkg.sh --allowAppleClang
+        ./bootstrap-vcpkg.sh
 
         # Validate that vcpkg bootstrap succeeded
         ./vcpkg version
