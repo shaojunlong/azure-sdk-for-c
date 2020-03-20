@@ -35,6 +35,7 @@ jobs:
         # Install gcc 8
         # brew reinstall gcc@8
         brew list --versions gcc
+        brew info gcc
         gcc --version
 
         git clone https://github.com/Microsoft/vcpkg.git
