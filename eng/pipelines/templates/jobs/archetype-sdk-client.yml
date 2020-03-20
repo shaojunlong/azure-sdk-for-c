@@ -8,7 +8,7 @@ jobs:
   strategy:
     matrix:
       MacOS_x64_with_unit_test:
-        vm.image: 'macOS-10.15'
+        vm.image: 'macOS-10.14'
         vcpkg.deps: 'cmocka'
         VCPKG_DEFAULT_TRIPLET: 'x64-osx'
         build.args: ' -DUNIT_TESTING=ON'
