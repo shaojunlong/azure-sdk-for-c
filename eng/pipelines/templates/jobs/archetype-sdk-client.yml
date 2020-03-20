@@ -37,6 +37,7 @@ jobs:
         brew list --versions gcc
         brew info gcc
         gcc --version
+        ls usr/local/Cellar/gcc/
 
         git clone https://github.com/Microsoft/vcpkg.git
         cd vcpkg
