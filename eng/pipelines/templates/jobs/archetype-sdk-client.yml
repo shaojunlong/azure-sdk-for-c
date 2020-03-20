@@ -17,7 +17,7 @@ jobs:
   variables:
     CMOCKA_XML_FILE: "%g-test-results.xml"
     CMOCKA_MESSAGE_OUTPUT: "xml"
-    CXX: g++8
+    CXX: g++-8
 
   steps:
   - checkout: self
@@ -34,6 +34,7 @@ jobs:
 
         # Install gcc 8
         # brew reinstall gcc@8
+        brew list --versions gcc
         gcc --version
 
         git clone https://github.com/Microsoft/vcpkg.git
