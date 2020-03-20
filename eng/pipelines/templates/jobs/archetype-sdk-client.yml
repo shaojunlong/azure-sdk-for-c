@@ -36,6 +36,7 @@ jobs:
         # brew reinstall gcc@8
         brew list --versions gcc
         brew info gcc
+        brew search gcc
         gcc --version
         ls /usr/local/Cellar/gcc
 
