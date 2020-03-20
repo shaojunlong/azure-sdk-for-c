@@ -8,7 +8,7 @@ jobs:
   strategy:
     matrix:
       MacOS_x64_with_unit_test:
-        vm.image: 'macOS-10.14'
+        vm.image: 'macOS-10.15'
         vcpkg.deps: 'cmocka'
         VCPKG_DEFAULT_TRIPLET: 'x64-osx'
         build.args: ' -DUNIT_TESTING=ON'
@@ -17,7 +17,6 @@ jobs:
   variables:
     CMOCKA_XML_FILE: "%g-test-results.xml"
     CMOCKA_MESSAGE_OUTPUT: "xml"
-    CXX: g++-8
 
   steps:
   - checkout: self
@@ -32,13 +31,8 @@ jobs:
         echo "xcode path:"
         sudo xcode-select --print-path
 
-        # Install gcc 8
-        # brew reinstall gcc@8
-        brew list --versions gcc
-        brew info gcc
-        brew search gcc
-        gcc --version
-        ls /usr/local/Cellar/gcc
+        # Install gcc 9
+        # brew reinstall gcc@9
 
         git clone https://github.com/Microsoft/vcpkg.git
         cd vcpkg
