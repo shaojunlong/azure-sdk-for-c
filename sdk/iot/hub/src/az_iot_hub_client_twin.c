@@ -58,6 +58,18 @@ AZ_NODISCARD az_result az_iot_hub_client_twin_patch_subscribe_topic_filter_get(
   return AZ_OK;
 }
 
+AZ_NODISCARD az_result az_iot_hub_client_twin_received_topic_parse(
+    az_iot_hub_client const* client,
+    az_span received_topic,
+    az_iot_hub_client_twin_response* out_twin_response)
+{
+  AZ_PRECONDITION_NOT_NULL(client);
+  AZ_PRECONDITION_VALID_SPAN(received_topic, 1, false);
+  AZ_PRECONDITION_NOT_NULL(out_twin_response);
+
+  return AZ_OK;
+}
+
 AZ_NODISCARD az_result az_iot_hub_client_twin_get_publish_topic_get(
     az_iot_hub_client const* client,
     az_span request_id,
@@ -69,8 +81,9 @@ AZ_NODISCARD az_result az_iot_hub_client_twin_get_publish_topic_get(
   AZ_PRECONDITION_VALID_SPAN(mqtt_topic, 0, false);
   AZ_PRECONDITION_NOT_NULL(out_mqtt_topic);
 
-  AZ_RETURN_IF_FAILED(az_span_copy(mqtt_topic, az_iot_hub_twin_get_pub_topic, &mqtt_topic));
-  AZ_RETURN_IF_FAILED(az_span_append(mqtt_topic, az_iot_hub_client_twin_request_id_suffix, &mqtt_topic));
+  AZ_RETURN_IF_FAILED(az_span_append(mqtt_topic, az_iot_hub_twin_get_pub_topic, &mqtt_topic));
+  AZ_RETURN_IF_FAILED(
+      az_span_append(mqtt_topic, az_iot_hub_client_twin_request_id_suffix, &mqtt_topic));
   AZ_RETURN_IF_FAILED(az_span_append(mqtt_topic, request_id, &mqtt_topic));
 
   *out_mqtt_topic = mqtt_topic;
@@ -89,8 +102,9 @@ AZ_NODISCARD az_result az_iot_hub_client_twin_patch_publish_topic_get(
   AZ_PRECONDITION_VALID_SPAN(mqtt_topic, 0, false);
   AZ_PRECONDITION_NOT_NULL(out_mqtt_topic);
 
-  AZ_RETURN_IF_FAILED(az_span_copy(mqtt_topic, az_iot_hub_twin_patch_pub_topic, &mqtt_topic));
-  AZ_RETURN_IF_FAILED(az_span_append(mqtt_topic, az_iot_hub_client_twin_request_id_suffix, &mqtt_topic));
+  AZ_RETURN_IF_FAILED(az_span_append(mqtt_topic, az_iot_hub_twin_patch_pub_topic, &mqtt_topic));
+  AZ_RETURN_IF_FAILED(
+      az_span_append(mqtt_topic, az_iot_hub_client_twin_request_id_suffix, &mqtt_topic));
   AZ_RETURN_IF_FAILED(az_span_append(mqtt_topic, request_id, &mqtt_topic));
 
   *out_mqtt_topic = mqtt_topic;
