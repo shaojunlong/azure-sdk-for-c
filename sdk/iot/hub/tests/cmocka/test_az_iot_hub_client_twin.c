@@ -23,6 +23,7 @@ static const az_span test_device_id = AZ_SPAN_LITERAL_FROM_STR("my_device");
 static const az_span test_device_hostname = AZ_SPAN_LITERAL_FROM_STR("myiothub.azure-devices.net");
 static const az_span test_device_request_id = AZ_SPAN_LITERAL_FROM_STR("id_one");
 static const az_span test_twin_received_topic_success = AZ_SPAN_LITERAL_FROM_STR("$iothub/twin/res/200");
+static const az_span test_twin_received_topic_desired_success = AZ_SPAN_LITERAL_FROM_STR("$iothub/twin/PATCH/properties/desired/");
 static const az_span test_twin_received_topic_fail = AZ_SPAN_LITERAL_FROM_STR("$iothub/twin/rez/200");
 
 static const char test_correct_twin_response_topic_filter[] = "$iothub/twin/res/#";
@@ -600,6 +601,17 @@ static void test_az_iot_hub_client_twin_received_topic_parse_found_succeed()
       &client, test_twin_received_topic_success, &response), AZ_OK);
 }
 
+static void test_az_iot_hub_client_twin_received_topic_parse_desired_found_succeed()
+{
+  az_iot_hub_client client;
+  assert_int_equal(
+      az_iot_hub_client_init(&client, test_device_hostname, test_device_id, NULL), AZ_OK);
+  az_iot_hub_client_twin_response response;
+
+  assert_int_equal(az_iot_hub_client_twin_received_topic_parse(
+      &client, test_twin_received_topic_desired_success, &response), AZ_OK);
+}
+
 static void test_az_iot_hub_client_twin_received_topic_parse_not_found_fails()
 {
   az_iot_hub_client client;
@@ -644,6 +656,7 @@ int test_az_iot_hub_client_twin()
 #endif // NO_PRECONDITION_CHECKING
     cmocka_unit_test(test_az_iot_hub_client_twin_response_subscribe_topic_filter_get_succeed),
     cmocka_unit_test(test_az_iot_hub_client_twin_response_subscribe_topic_filter_get_twice_succeed),
+    cmocka_unit_test(test_az_iot_hub_client_twin_received_topic_parse_desired_found_succeed),
     cmocka_unit_test(test_az_iot_hub_client_twin_response_subscribe_topic_filter_get_small_buffer_fails),
     cmocka_unit_test(test_az_iot_hub_client_twin_get_publish_topic_get_succeed),
     cmocka_unit_test(test_az_iot_hub_client_twin_get_publish_topic_get_twice_succeed),
