@@ -66,29 +66,33 @@ AZ_NODISCARD az_result az_iot_hub_client_twin_received_topic_parse(
   AZ_PRECONDITION_NOT_NULL(client);
   AZ_PRECONDITION_VALID_SPAN(received_topic, 1, false);
   AZ_PRECONDITION_NOT_NULL(out_twin_response);
+  
+  az_result result;
 
   az_span token;
-  token = az_span_token(received_topic, az_iot_hub_twin_topic_prefix, &received_topic);
+  az_span remaining;
+  result = az_span_find(received_topic, az_iot_hub_twin_topic_prefix, &remaining);
+  // token = az_span_token(received_topic, az_iot_hub_twin_topic_prefix, &remaining);
 
-  if(az_span_ptr(token) != NULL)
+  if(az_span_ptr(remaining) != NULL)
   {
-    token = az_span_token(received_topic, az_iot_hub_twin_response_sub_topic, &received_topic);
-    if(az_span_ptr(token) != NULL)
+    result = az_span_find(received_topic, az_iot_hub_twin_response_sub_topic, &remaining);
+    if(az_span_ptr(received_topic) != NULL)
     {
       //Is a res case
+      result = AZ_OK;
     }
     else
     {
       token = az_span_token(received_topic, az_iot_hub_twin_patch_sub_topic, &received_topic);
     }
   }
-
-  if(az_span_ptr(token) == NULL)
+  else
   {
-    return AZ_ERROR_ITEM_NOT_FOUND;
+    result = AZ_ERROR_ITEM_NOT_FOUND;
   }
-
-  return AZ_OK;
+  (void)token;
+  return result;
 }
 
 AZ_NODISCARD az_result az_iot_hub_client_twin_get_publish_topic_get(
