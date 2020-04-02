@@ -69,29 +69,30 @@ AZ_NODISCARD az_result az_iot_hub_client_twin_received_topic_parse(
   
   az_result result;
 
-  az_span token;
   az_span remaining;
-  result = az_span_find(received_topic, az_iot_hub_twin_topic_prefix, &remaining);
-  // token = az_span_token(received_topic, az_iot_hub_twin_topic_prefix, &remaining);
-
-  if(az_span_ptr(remaining) != NULL)
+  //Check if is related to twin or not
+  if(az_span_find(received_topic, az_iot_hub_twin_topic_prefix, &remaining) == AZ_OK)
   {
-    result = az_span_find(received_topic, az_iot_hub_twin_response_sub_topic, &remaining);
-    if(az_span_ptr(received_topic) != NULL)
+    if(az_span_find(remaining, az_iot_hub_twin_response_sub_topic, &remaining) == AZ_OK)
     {
       //Is a res case
       result = AZ_OK;
     }
+    else if(az_span_find(remaining, az_iot_hub_twin_patch_sub_topic, &remaining) == AZ_OK)
+    {
+      // Is a /PATCH case
+      result = AZ_OK;
+    }
     else
     {
-      token = az_span_token(received_topic, az_iot_hub_twin_patch_sub_topic, &received_topic);
+      result = AZ_ERROR_ITEM_NOT_FOUND;
     }
   }
   else
   {
     result = AZ_ERROR_ITEM_NOT_FOUND;
   }
-  (void)token;
+
   return result;
 }
 
