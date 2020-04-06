@@ -13,7 +13,6 @@
 
 static const uint8_t az_iot_hub_client_twin_hashtag = '#';
 static const az_span az_iot_hub_client_twin_request_id_suffix = AZ_SPAN_LITERAL_FROM_STR("?$rid=");
-
 static const az_span az_iot_hub_twin_topic_prefix = AZ_SPAN_LITERAL_FROM_STR("$iothub/twin/");
 static const az_span az_iot_hub_twin_response_sub_topic = AZ_SPAN_LITERAL_FROM_STR("res/");
 static const az_span az_iot_hub_twin_get_pub_topic = AZ_SPAN_LITERAL_FROM_STR("GET/");
@@ -66,19 +65,27 @@ AZ_NODISCARD az_result az_iot_hub_client_twin_received_topic_parse(
   AZ_PRECONDITION_NOT_NULL(client);
   AZ_PRECONDITION_VALID_SPAN(received_topic, 1, false);
   AZ_PRECONDITION_NOT_NULL(out_twin_response);
-  
+
   az_result result;
 
+  int32_t index;
   az_span remaining;
-  //Check if is related to twin or not
-  if(az_span_find(received_topic, az_iot_hub_twin_topic_prefix, &remaining) == AZ_OK)
+  // Check if is related to twin or not
+  if ((index = az_span_find(received_topic, az_iot_hub_twin_topic_prefix, &remaining)) >= 0)
   {
-    if(az_span_find(remaining, az_iot_hub_twin_response_sub_topic, &remaining) == AZ_OK)
+    if ((index = az_span_find(
+             az_span_slice(received_topic, index, -1),
+             az_iot_hub_twin_response_sub_topic,
+             &remaining))
+        >= AZ_OK)
     {
-      //Is a res case
+      // Is a res case
       result = AZ_OK;
     }
-    else if(az_span_find(remaining, az_iot_hub_twin_patch_sub_topic, &remaining) == AZ_OK)
+    else if (
+        (index = az_span_find(
+             az_span_slice(received_topic, index, -1), az_iot_hub_twin_patch_sub_topic, &remaining))
+        >= 0)
     {
       // Is a /PATCH case
       result = AZ_OK;
